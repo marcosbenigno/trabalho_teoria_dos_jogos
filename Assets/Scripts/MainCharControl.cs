@@ -12,8 +12,7 @@ public class MainCharControl : MonoBehaviour
 
     public int maxHealth = 5;
     public float timeInvinsible = 2.0f;
-    int currentHealth;
-    public int health { get { return currentHealth; } }
+    public int currentHealth;
     bool isInvinsible;
     float invincibleTimer;
 
@@ -23,6 +22,9 @@ public class MainCharControl : MonoBehaviour
     float horizontal;
     float vertical;
 
+    public HealthBar healthBar;
+    public GameOverMenu gameOverMenu;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,6 +33,7 @@ public class MainCharControl : MonoBehaviour
         hasNewSword = false;
 
         currentHealth = maxHealth;
+        healthBar.SetMaxHealth(maxHealth);
     }
 
     // Update is called once per frame
@@ -73,11 +76,17 @@ public class MainCharControl : MonoBehaviour
             invincibleTimer = timeInvinsible;
         }
         currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
+        healthBar.SetHealth(currentHealth);
         UnityEngine.Debug.Log(currentHealth + "/" + maxHealth);
+
+        if (currentHealth <= 0)
+        {
+            gameOverMenu.GameOver();
+        }
     }
 
     void changeDamage(int amount) {
-        GetComponent<MainCharAttack>().damage += amount; // Mudar para o dano específico da espada
+        GetComponent<MainCharAttack>().damage += amount; // Mudar para o dano especï¿½fico da espada
         hasNewSword = false;
     }
 }

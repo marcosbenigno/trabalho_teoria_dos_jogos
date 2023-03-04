@@ -76,6 +76,7 @@ public class EnemyControl : MonoBehaviour
         {
             player.ChangeHealth(-1);
         }
+        direction = -direction;
     }
 
     public void ChangeHealth(int amount)
